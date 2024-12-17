@@ -26,10 +26,12 @@ jobs:
       run: dotnet build
       working-directory: ASCOM.Alpaca.Simulators
     - name: Start simulators server
-      run: dotnet run &
+      run: |
+        dotnet run &
+        npx wait-on http://localhost:32323/
       working-directory: ASCOM.Alpaca.Simulators
     # Execute those sequentially to avoid blowing up number of job combinations even further.
     - name: Run protocol test
-      run: ~/conformu/conformu alpacaprotocol http://127.0.0.1:32323/api/v1/${{ matrix.device }}/0
+      run: ~/conformu/conformu alpacaprotocol http://localhost:32323/api/v1/${{ matrix.device }}/0
     - name: Run conformance test
-      run: ~/conformu/conformu conformance http://127.0.0.1:32323/api/v1/${{ matrix.device }}/0
+      run: ~/conformu/conformu conformance http://localhost:32323/api/v1/${{ matrix.device }}/0
