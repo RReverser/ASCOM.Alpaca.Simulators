@@ -22,6 +22,9 @@ jobs:
     - uses: actions/checkout@v4
     - name: Download and unpack ConformU
       run: mkdir ~/conformu && curl -L https://github.com/ASCOMInitiative/ConformU/releases/download/v4.1.0/conformu.linux-x64.tar.xz | tar -xJ -C ~/conformu
+    - name: Build simulators
+      run: dotnet build
+      working-directory: ASCOM.Alpaca.Simulators
     - name: Start simulators server
       run: dotnet run &
       working-directory: ASCOM.Alpaca.Simulators
